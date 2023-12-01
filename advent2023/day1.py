@@ -1,10 +1,10 @@
 raw_data = open('sample.txt', 'r').read()
 data = raw_data.split('\n')
 
-
 ### Main issue for this day was that I only accounted for the first instance
 # of a digit, now i know that rfind also gives me the last occurence.
 
+## Can speed up by using methods isdigit, and startswith -> johnathanpaulson
 
 #ans = 0
 #for line in data:
@@ -26,6 +26,7 @@ for line in data:
         continue
     indicies = []
     spot = {}
+
     for index, num in enumerate(nums):
         if num in line:
             indicies.append(line.find(num))
@@ -40,7 +41,6 @@ for line in data:
             spot[line.rfind(str(i))] = i
             spot[line.find(str(i))] = i
 
-    print(line, spot.values(), spot[min(indicies)] + spot[max(indicies)])
-    indicies.sort()
     ans += spot[min(indicies)]*10 + spot[max(indicies)]
 print(ans)
+
