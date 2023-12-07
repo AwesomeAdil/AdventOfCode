@@ -1,3 +1,5 @@
+import time
+start_time = time.time()
 raw_data = open('sample.txt', 'r').read()
 data = raw_data.split('\n\n')
 seeds = list(map(int, data[0].split()[1:]))
@@ -33,12 +35,9 @@ for i in range(7):
 
 index = 0
 seed_ranges = [(seeds[2*i], seeds[2*i]+seeds[2*i+1]-1) for i in range((len(seeds)+1)//2)]
-for row in boundaries:
-    print(row)
 seed_ranges.sort()
 level = 0
 for level in range(7):
-    print('LEVEL', level, len(seed_ranges))
     bi = 0
     new_ranges = []
     i = 0
@@ -79,3 +78,7 @@ for level in range(7):
     new_ranges.sort()
     seed_ranges = new_ranges
 print(seed_ranges[0][0])
+
+end_time = time.time()
+execution_time = abs(start_time - end_time)
+print("Execution time:",execution_time)
