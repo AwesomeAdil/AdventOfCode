@@ -1,8 +1,10 @@
 raw_data = open('sample.txt', 'r').read()
 data = raw_data.split('\n')[:-1]
 
-def gdc(a,b):
+def gcd(a,b):
     return a if b == 0 else gdc(b, a%b)
+
+
 
 def lcml(x):
     if len(x) == 0:
@@ -13,8 +15,10 @@ def lcml(x):
         return lcm(x[0], x[1])
     return lcm(lcml(x[:len(x)//2]), lcml(x[len(x)//2:]))
 
+
+
 def lcm(a,b):
-    return (a*b)//gdc(a,b)
+    return (a*b)//gcd(a,b)
 
 paths = {}
 points = []
