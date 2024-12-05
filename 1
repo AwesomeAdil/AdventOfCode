@@ -1,0 +1,73 @@
+raw_data = open('sample.txt', 'r').read()
+data = raw_data.split('\n')[:-1]
+
+
+parents = {}
+ranks = {}
+num_cons = {}
+size = {}
+
+
+def findParent(x):
+    global parents
+    return x if parents[x] == x else findParent(parents[x])
+
+def union(x,y):
+    x = findParent(x)
+    y = findParent(y)
+    if x == y:
+        return
+
+    if x not in num_cons:
+        num_cons[x] = {}
+    if y not in num_cons:
+        num_cons[y] = {}
+
+    if y not in num_cons[x]:
+        num_cons[x][y] = 1
+        num_cons[y][x] = 1
+    else:
+        if num_cons[x][y] == 2:
+            if rank[x] < rank[y]:
+                x,y = y,x
+            
+            ranks[x] = max(ranks[x], ranks[y]+1)
+            parents[y] = x
+            size[x] += size[y]
+            ### transfer all partial connections
+            for a,b in num_cons.items():
+                if a not in num_cons[x]:
+                    num_cons[findParent(x)][findParent(a)] += b
+                    num_cons[findParent(a)][x] += b
+                    if num_cons[x][findParent] > 3:
+                        union(x, findParent(a))
+
+                   
+        else:
+            num_cons[(x,y)] += 1
+
+for line in data:
+    parts = line.split(': ')
+    if parts[0] not in parents:
+        parents[parts[0]] = parts[0]
+        ranks[parts[0]] = 1
+        size[parts[0]] = 1
+    x = findParent(parts[0])
+    for i in parts[1].split():
+        if i not in parents:
+            parents[i] = i
+            ranks[i] = 1
+            size[i] = 1
+        y = findParent(i)
+        union(x,y)
+parts = {}
+ans = 1
+for i in parents.values():
+    print(i)
+    if i not in parts:
+        parts[i] = size[i]
+        ans *= size[i]
+print(ans)
+
+
+

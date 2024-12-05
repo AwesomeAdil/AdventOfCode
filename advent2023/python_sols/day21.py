@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import numpy as np
 raw_data = open('sample.txt', 'r').read()
 data = raw_data.split('\n')[:-1]
 
@@ -17,36 +19,26 @@ for r, line in enumerate(data):
         grid[(r,c)] = ch
 
 
-reachable[0] = set()
-evens = set()
+reachable[0] = set([start])
+evens = set([start])
 odds = set()
 
-unseen = set([start])
-"""
-for i in range(64):
+unseen = set()
+ans = [1]
+for i in range(2*131+66):
     reachable[i+1] = set()
     for element in reachable[i]:
         for x, y in zip(dx, dy):
             nx, ny = element[0] + x, element[1] + y
-            if 0<=nx<rows and 0<=ny<cols and grid[(nx, ny)] != '#':
+
+            #if 0<=nx<rows and 0<=ny<cols
+            if grid[(nx%len(data), ny%len(data[0]))] != '#':
                 reachable[i+1].add((nx, ny))
-"""      
-for i in range(26501365 + 1):
-    print(i)
-    adder = set()
-    for element in unseen:
-        for x, y in zip(dx, dy):
-            nx, ny = element[0] + x, element[1] + y
-            if (nx, ny) in evens or (nx, ny) in odds:
-                continue
-            if grid[(nx%rows, ny%cols)] == '#':
-                continue
-            adder.add((nx, ny))
-            if i == 1:
-                odds.add((nx, ny))
-            else:
-                evens.add((nx, ny))
-    unseen = adder
-
-
-print(len(odds))
+    ans.append(len(reachable[i+1]))
+print(len(reachable[65]), len(reachable[131 +65]), len(reachable[2*131+65]))
+print(len(reachable[64]))
+x = np.array([0.0, 1.0, 2.0])
+y = np.array([len(reachable[65]), len(reachable[131 +65]), len(reachable[2*131+65])])
+z = np.polyfit(x, y, 2)
+p = np.poly1d(z)
+print(p(202300))

@@ -55,10 +55,6 @@
  }
 
 
-
-
-
-
  //[[[[0,4],4],[7,[0,9]]],[1,1]]
  //[[[[0,4],4],[7,[0,9]]],[1,1]]
  void explode(int left, int right, int initdepth){

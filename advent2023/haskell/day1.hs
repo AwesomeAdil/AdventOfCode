@@ -27,9 +27,9 @@ checkIfWord f x
   | quin /= '0' = quin
   | otherwise = '0'
   where one = (head . (f 1)) x
-        trip = (getNum . (f 3)) x
-        quat = (getNum . (f 4)) x
-        quin = (getNum . (f 5)) x
+        trip = getNum . (f 3) $ x
+        quat = getNum . (f 4) $ x
+        quin = getNum . (f 5) $ x
 
 isWordNumForward :: String -> Char
 isWordNumForward x
@@ -79,5 +79,4 @@ main :: IO()
 main = do
   input <- openFile "sample.txt" ReadMode
   raw_data <- hGetContents input
-  putStrLn(show(sum(map (\x-> read x::Int) [lineCalc_1 x| x <- collectLines raw_data])))
-
+  putStrLn . show . sum . map (\x-> read x::Int) $ [lineCalc_1 x| x <- collectLines raw_data]
